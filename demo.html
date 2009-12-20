@@ -1,23 +1,33 @@
 
+<script type="text/javascript" src="http://www-01.evenserver.com/s/js/jquery/jquery.js"></script>
+<script type="text/javascript" src="jquery.form2xml.js"></script>
+<script type="text/javascript" src="otherlibs/innerXHTML.js"></script>
+
+<div id="placeholder">
 <form id="myform">
 <input name="test" type="text" value="hi"/>
 <input name="ok" type="checkbox"/>
 <input name="o2k" type="checkbox"/>
 <input name="ok3" type="checkbox"/><br/>
-<input name="colors[]" type="checkbox" value="red"/> Red<br/>
-<input name="colors[]" type="checkbox" value="blue"/> Blue<br/>
-<input name="colors[]" type="checkbox" value="green"/> Green<br/>
+<select name="ok" multiple="multiple">
+<option value="red"> Red</option>
+<option value="blue"> Blue</option>
+<option value="green"> Green</option>
+</select>
 <input name="food" type="checkbox" value="pizza"/> Pizza<br/>
 <input name="food" type="checkbox" value="burgers"/> Burgers<br/>
 <input name="food" type="checkbox" value="salad"/> Salad<br/>
+<textarea name="post" rows="5" cols="40">
+</textarea>
 </form>
+</div>
 <input id="ok" type="button" value="process"/>
 <input id="debug" type="button" value="debug"/>
-
-<script type="text/javascript" src="http://www-01.evenserver.com/s/js/jquery/jquery.js"></script>
-<script type="text/javascript" src="jquery.form2xml.js"></script>
-<script type="text/javascript" src="json2.js"></script>
+<input id="entire" type="button" value="entire"/>
+<br/>
+<textarea id="result" rows="8" cols="40"></textarea>
 <script type="text/javascript">
+
 $("#ok").bind("click", function() {
     var myjson = $('form#myform').form2xml();
     
@@ -26,6 +36,40 @@ $("#ok").bind("click", function() {
 $("#debug").bind("click", function() {
     var myjson = $('form#myform').form2xml();
     
-    alert(myjson);
+    $("#result").val(unescape(myjson));
+});
+
+
+$("#entire").live("click", function() {
+    
+    $("input:text, input:hidden, input:password","#myform").each( function() {
+        //This doesn't work...
+        //var myval = $(this).val();
+        //Neither of these work!
+        //$(this).val(myval);
+        //$(this).attr("value", myval);
+        this.setAttribute("value",this.value);
+    });
+    $("textarea","#myform").each( function() {
+        $(this).text(this.value);
+    });
+    $("option","#myform").each( function() {
+      if (this.selected) {
+        this.setAttribute("selected","selected");
+      } else {
+        this.removeAttribute("selected");
+      }
+    });
+    $("input:radio,input:checkbox","#myform").each( function() {
+      if (this.checked) {
+        this.setAttribute("checked","checked");
+      } else {
+        this.removeAttribute("checked");
+      }
+    });
+    var container = document.getElementById('placeholder');
+    var code = innerXHTML(container);
+    $("#result").val(code);
+
 });
 </script>
