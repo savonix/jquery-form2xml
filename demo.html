@@ -1,0 +1,31 @@
+
+<form id="myform">
+<input name="test" type="text" value="hi"/>
+<input name="ok" type="checkbox"/>
+<input name="o2k" type="checkbox"/>
+<input name="ok3" type="checkbox"/><br/>
+<input name="colors[]" type="checkbox" value="red"/> Red<br/>
+<input name="colors[]" type="checkbox" value="blue"/> Blue<br/>
+<input name="colors[]" type="checkbox" value="green"/> Green<br/>
+<input name="food" type="checkbox" value="pizza"/> Pizza<br/>
+<input name="food" type="checkbox" value="burgers"/> Burgers<br/>
+<input name="food" type="checkbox" value="salad"/> Salad<br/>
+</form>
+<input id="ok" type="button" value="process"/>
+<input id="debug" type="button" value="debug"/>
+
+<script type="text/javascript" src="http://www-01.evenserver.com/s/js/jquery/jquery.js"></script>
+<script type="text/javascript" src="jquery.form2xml.js"></script>
+<script type="text/javascript" src="json2.js"></script>
+<script type="text/javascript">
+$("#ok").bind("click", function() {
+    var myjson = $('form#myform').form2xml();
+    
+    alert(myjson);
+});
+$("#debug").bind("click", function() {
+    var myjson = $('form#myform').form2xml();
+    
+    alert(myjson);
+});
+</script>
