@@ -8,7 +8,7 @@
       $.each(a, function() {
           var elt = this.name.replace(/\[\]/g,'')
           var node = this.value || '';
-          xml += "<" + elt + ">" + node +  "</" + elt + ">";
+          xml += "<" + elt + ">" + encodeURIComponent(node) +  "</" + elt + ">";
       });
       return "<" + formname + ">" + xml + "</" + formname + ">";
   };
